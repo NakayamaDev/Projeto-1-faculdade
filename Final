@@ -1,0 +1,1618 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+
+//funções
+void menu01();
+void menu02();
+void menu04();
+void funcmenu01();
+void funcmenu02();
+void funcmenu03();
+
+void adminmenu01();
+void adminmenu02();
+void adminmenu03();
+
+void menume();
+
+int main(){
+    int w[100], menu[100],logout =0;
+    char sair,op ,senhai[8], logini[15], reclamacao[1000];
+    float y[50];
+
+
+    //structs
+    //funcionario
+    
+    struct Benef{
+        int alimentacao;
+        int trasporte;
+        int salario;
+    };
+    struct Benef benef;
+
+    struct Financas{
+        float entrada[1000];
+        float liquido;
+        float bruto;
+        float saida[1000];
+    };
+    struct Financas financas;
+
+    struct Marca{
+        struct Mess{
+            struct Diaa{
+                int dia1;
+                struct Horario{
+                    int horario;
+                };
+                struct Horario hora[20];
+            };
+            struct Diaa diaa[31];
+        int mes;
+        };
+        struct Mess mess[12];
+    };
+    struct Marca marca;
+
+    struct Agenda{
+        int mednum[100];
+        struct Marca marca;
+    };
+    struct Agenda agenda;
+
+    struct Func{
+        char cpf[11];
+        char nome[100];
+        int idade;
+        struct Benef benef;
+        char login[15];
+        char senha[8];
+    };
+    struct Func func[100];
+    //funcionario fim
+    
+    strcpy(func[0].login, "2");
+    strcpy(func[0].senha, "2");
+
+    //admin
+    struct Admin{
+        char cpf[11];
+        char nome[100];
+        int idade;
+        struct Benef benef;
+        char login[15];
+        char senha[8];
+    };
+    struct Admin admin[100];
+
+    strcpy(admin[0].login, "1");
+    strcpy(admin[0].senha, "1");
+    //adiministrador fim
+
+    //medico
+    struct Medic{
+        char cpf[11];
+        char nome[100];
+        int idade;
+        struct Benef benef;
+        char login[15];
+        char senha[8];
+        struct Agenda agenda;
+    };
+    struct Medic medic[100];
+    //medico fim
+
+    //paciente
+    struct Paciente{
+        char nome[100];
+        char cpf[11];
+        char rg[7];
+        int idade;
+        char plano[100];
+        char endereco[100];
+        char telefone[14];
+    };
+    struct Paciente paciente[1000];
+    //paciente fim
+
+    //valores Monetario
+    y[0] = 1096.00;
+    y[1] = 8360.00;
+    y[2] = 4180.00;
+    y[3] = 9; //inss(salario>2086.60)
+    y[4] = 7.5; //inss(salario<1045)
+    y[5] = 6; //alimentação
+    y[6] = 6; //trsporter
+
+    //valores monetarios fim
+    w[1] = 3; //func
+    w[25] = 3; //admin
+    w[35] = 3; // medico
+    w[4] = 0; // paciente v
+    w[5] = 25;// paciente v
+    w[4] = 0; //paciente
+	w[12] = 0;// lista marca paciente
+	w[13] = 25; //lista marca paciente
+    w[67] = 0;//lista de paciente 2
+    w[68] = w[35];//lista de paciente2
+
+    do{
+        menu01();
+        sleep(2);
+        system("cls");
+        menu02();
+        scanf("%d",&menu[0]);
+        fflush(stdin);
+        sleep(2);
+        system("cls");
+        
+		switch(menu[0]){
+        	case 1: //funcionasas
+                do{
+                    printf("Login:\n"); 
+                    scanf(" %[^\n]s",&logini);
+                    fflush(stdin);
+                    for(w[0]=0;w[0]<w[1];w[0]++){
+                        if (strcmp(logini,func[w[0]].login) == 0){
+                            w[2] = w[0];
+                            printf("Senha:\n"); 
+                            scanf(" %[^\n]s",&senhai);
+                            fflush(stdin);
+                            system("cls");
+                            if(strcmp(senhai,func[w[0]].senha) == 0){
+                                printf("Bem vindo\nEspero que tenha um bom dia de trabalho");
+                                sleep(2);
+                                system("cls");
+                                do{
+                                    funcmenu01();
+                                    scanf(" %d", &menu[1]);
+                                    fflush(stdin);
+                                    sleep(2);
+                                    system("cls");
+                                    switch(menu[1]){
+                                        case 1:
+                                            funcmenu02();
+                                            printf("\nFicar Na tela?(s/n)?");
+                                            scanf(" %c",&sair);
+                                            fflush(stdin);
+                                            sleep(2);
+                                            system("cls");
+                                        break;
+                                        
+                                        case 2:
+                                            do{
+                                                do{
+                                                    printf("\nRegistrando Paciente");
+                                                    printf("\nNome: ");
+                                                    scanf(" %[^\n]s",&paciente[w[39]].nome);
+                                                    fflush(stdin);
+
+                                                    printf("Cpf:");
+                                                    scanf(" %[^\n]s",&paciente[w[39]].cpf);
+                                                    fflush(stdin);
+
+                                                    printf("Rg: ");
+                                                    scanf(" %[^\n]s",&paciente[w[39]].rg);
+                                                    fflush(stdin);
+
+                                                    printf("Idade: ");
+                                                    scanf(" %d",&paciente[w[39]].idade);
+                                                    fflush(stdin);
+
+                                                    printf("Endereco: ");
+                                                    scanf(" %[^\n]s",&paciente[w[39]].endereco);
+                                                    fflush(stdin);
+
+                                                    printf("Telefone: ");
+                                                    scanf(" %[^\n]s",&paciente[w[39]].telefone);
+                                                    fflush(stdin);
+
+                                                    printf("O paciente %s tem convenio?",paciente[w[39]].nome);
+                                                    scanf(" %c",&op);
+                                                    fflush(stdin);
+
+                                                    if(op == 's'){
+                                                        printf("\nInforme o convenio: %s\n",paciente[w[39]].plano);
+                                                        scanf(" %s",&paciente[w[39]].plano);
+                                                        fflush(stdin);
+
+                                                    }else{
+                                                        printf("\nPaciente registrado como particular");
+                                                    }
+                                                    printf("\nDeseja modifica novamente?");
+                                                    scanf("%c",&sair);
+                                                    fflush(stdin);
+                                                }while(sair == 's');
+                                                w[39]++;
+                                                printf("\nDeseja Registrar outro paciente?");
+                                                scanf(" %c",&sair);
+                                                fflush(stdin);
+                                                system("cls");
+                                            }while(sair == 's');
+                                        break;
+                                        
+                                        case 3:
+                                            do{
+                                                do{
+                                                    do{
+                                                    	system("cls");
+                                                        printf("Lista de Paciente\nSera Exibida 25 pacientes");
+                                                        for(w[3]=w[4];w[3]<=w[5];w[3]++){
+                                                            printf("\n[%d] %s",w[3],paciente[w[3]].nome);
+                                                        }
+                                                        printf("\n<(n)--Navegue nas listas --(s)>\t\t Aperte c para escolher\n");
+                                                        scanf(" %c", &op);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(op ==  'n'){
+                                                        	if(w[4]<=975){
+                                                        		w[4] = w[4] - 25;
+                                                        		w[5] = w[5] - 25;                                                        	
+															}
+														}
+														if(op ==  's'){
+                                                        	if(w[5]<1000){
+                                                            w[4] = w[4] + 25;
+                                                            w[5] = w[5] + 25;
+                                                        	}          
+														}
+                                                    }while(op != 'c');
+                                                    printf("Qual paciente deseja Alterar?");
+                                                    scanf("%d",&w[6]);
+                                                    fflush(stdin);
+                                                    system("cls");
+
+                                                    printf("Deseaja escolher outro paciente?");
+                                                    scanf(" %c",&sair);
+                                                    fflush(stdin);
+                                                }while(sair == 's');
+                                                system("cls");
+                                                do{
+                                                    funcmenu03();
+                                                    scanf("%d",&menu[2]);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    switch(menu[2]){
+                                                        case 1:
+                                                            do{
+                                                                printf("\nNome registrado: %s",paciente[w[6]].nome);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %c",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Nome:");
+                                                            scanf(" %[^\n]s",&paciente[w[6]].nome);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+                                                        case 2:
+                                                            do{
+                                                                printf("\nCpf registrado: %s",paciente[w[6]].cpf);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %c",&op);
+                                                                fflush(stdin);
+                                                            }while(op != 's');
+                                                            printf("Cpf:");
+                                                            scanf(" %[^\n]s",&paciente[w[6]].cpf);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+                                                        case 3:
+                                                            do{
+                                                                printf("Rg registrado: %d",paciente[w[6]].rg);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %[^\n]s",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Rg:");
+                                                            scanf(" %d",&paciente[w[6]].rg);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+                                                        case 4:
+                                                            do{
+                                                                printf("Idade registrado: %d",paciente[w[6]].idade);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %[^\n]s",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Idade:");
+                                                            scanf("%d",&paciente[w[6]].idade);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+                                                        case 5:
+                                                            do{
+                                                                printf("Plano registrado: %d",paciente[w[6]].plano);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %c",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Plano:");
+                                                            scanf(" %d",&paciente[w[6]].plano);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+
+                                                        case 6:
+                                                            do{
+                                                                printf("Endereco registrado: %d",paciente[w[6]].endereco);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %c",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Endereço:");
+                                                            scanf("%d",&paciente[w[6]].endereco);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        break;
+
+                                                        case 7:
+                                                            do{
+                                                                printf("Telefone registrado: %s",paciente[w[6]].telefone);
+                                                                printf("\nDeseja alterar(s/n)?");
+                                                                scanf(" %[^\n]s",&op);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(op != 's');
+                                                            printf("Telefone:");
+                                                            scanf(" %[^\n]s",&paciente[w[6]].telefone);
+                                                            fflush(stdin);
+                                                            system("cls");
+
+                                                        break;
+
+                                                        case 8:
+                                                            sair == 's';
+                                                        break;
+                                                    }
+                                                        
+                                                    printf("Deseja ver a ficha complete?");
+                                                    scanf(" %d",&menu[3]);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    if(menu[3] != 's' && sair != 's'){
+                                                        printf("\nNome: %s", paciente[w[6]].nome);
+                                                        printf("\nCpf: %s", paciente[w[6]].cpf);
+                                                        printf("\nRg: %s",paciente[w[6]].rg);
+                                                        printf("\nIdade: %d",paciente[w[6]].idade);
+                                                        printf("\nPlano: %s",paciente[w[6]].plano);
+                                                        printf("\nEndereço: %s",paciente[w[6]].endereco);
+                                                        printf("\nTelefone %s",paciente[w[6]].telefone);
+                                                    }
+                                                    
+                                                    printf("\nAlterar outro dado do Sr[a] %s paciente?",paciente[w[6]].nome);
+                                                    scanf("%c",&sair);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                }while(sair == 's');
+                                                printf("\nAlterar dado de outro Paciente?");
+                                                scanf("%c",&sair);
+                                                fflush(stdin);
+                                                system("cls");
+                                            }while(sair == 's');
+                                        break;
+                                        
+                                        case 4: 
+                                            do{
+                                                do{
+                                                    do{
+                                                        printf("Lista de Paciente\nSera Exibida 25 pacientes");
+                                                        for(w[10]=w[12];w[10]<=w[13];w[10]++){                                                            printf("\n[%d] %s",w[10],paciente[w[10]].nome);
+                                                        }
+                                                        printf("\n<(n)--Navegue nas listas --(s)>\t\t Aperte c para escolher\n");
+                                                        scanf(" %c", &op);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(op ==  'n'){
+                                                        	if(w[4]<=975){
+                                                        	    w[4] = w[4] - 25;
+                                                        	    w[5] = w[5] - 25;                                                        	
+															}
+														}
+														if(op ==  's'){
+                                                        	if(w[5]<1000){
+                                                                w[4] = w[4] + 25;
+                                                                w[5] = w[5] + 25;
+                                                        	}          
+														}
+                                                    }while(op != 'c');
+                                                    printf("Qual paciente deseja marcar?");
+                                                    scanf("%d",&w[10]);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    printf("Deseaja escolher outro paciente?");
+                                                    scanf(" %c",&sair);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                }while(sair == 's');//seleciona paciente
+                                                system("cls");
+                                                printf("Paciente (%d) %s",w[10],paciente[w[10]].nome);
+                                                do{
+                                                    printf("\nLista de medicos sera exibida");
+                                                    for(w[15] = 0; w[15] < w[35]; w[15]++){ //lista de medico
+                                                        printf("\nMedicos [%d] %s", w[15], medic[w[15]].nome);
+                                                    }
+                                                    printf("\nA agenda de qual Medico deseja alterar?");
+                                                    scanf("%d",&w[19]);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    printf("Deseja Alterar Medico?");
+                                                    scanf("%d",&sair);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                }while(sair == 's');
+                                                system("cls");
+                                                agenda.mednum[w[19]];
+                                                do{
+                                                    do{
+                                                        printf("Paciente (%d) %s",w[10],paciente[w[10]].nome);
+                                                        printf("Agenda de medico %d", menu[3]);
+                                                        do{
+                                                            printf("\nMes");
+                                                            scanf("%d",&w[65]);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                            if(w[65]<=12 && w[65]>=1){
+                                                                w[66] =1;
+                                                            }else{
+                                                                printf("\nMes invalido");
+                                                            }
+
+                                                        }while(w[66] == 0);
+                                                        printf("\nQual a dia que deseja Vizualizar?\nNumeros validos de 1 a 31");
+                                                        printf("\nDia");
+                                                        scanf("%d",&w[20]);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(w[20]<=31 && w[20]>=1){
+                                                            w[21] =1;
+                                                        }else{
+                                                            printf("\nDia invalido");
+                                                        }
+                                                    }while(w[21] == 0);
+                                                    printf("Deseja mudar dia escolido?");
+                                                    scanf(" %c",&sair);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    w[21]==0;
+                                                }while(sair == 's');
+                                                system("cls");
+                                                printf("Paciente (%d) %s",w[10],paciente[w[10]].nome);
+                                                printf("lista de medico %d", menu[3]);
+                                                printf("\nOs horaririos devem ser marcados de 1 hora em 1 hora \nApartir das 8 as 18 almoço 12:00 as 13:30 \nCaso haja disponibilidade de horario encaixar na agenda");
+                                                do{
+                                                    for(w[22]=0;w[22]<=15;w[22]++){
+                                                        printf("\nHoraio[%d]",w[22]);
+                                                    }
+                                                    for(w[40]=16;w[40]<=25;w[40]++){
+                                                        printf("\nEncaixe[%d]",w[40]);
+                                                    }
+                                                    printf("\nHorario:");
+                                                    scanf("%d",&w[77]);
+                                                    fflush(stdin);
+                                                    medic[menu[3]].agenda.marca.mess[w[65]].diaa[w[20]].hora[w[77]].horario;
+                                                    system("cls");
+                                                    printf("Deseja mudar horario Escolido?");
+                                                    scanf(" %c",&sair);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                }while(sair == 's');
+                                                printf("Agenda do medico %s\nData: %d", medic[menu[3]].nome ,w[20]);
+                                                printf("Consulta marcada com sucesso!");                                                    
+                                                printf("Deseaja marcar outra consulta?");
+                                                scanf(" %c", &sair);
+                                                fflush(stdin);
+                                                system("cls");
+                                            }while(sair == 's');
+                                        break;
+
+                                        case 5:
+                                            do{
+                                                do{
+                                                    system("cls");
+                                                    printf("Lista de Medico\nSera Exibida 25 medicos");
+                                                    for(w[69]=w[67];w[69]<=w[68];w[69]++){
+                                                        printf("\n[%d] %s",w[69],medic[w[69]].nome);
+                                                    }
+                                                    printf("\n<(n)--Navegue nas listas --(s)>\t\t Aperte c para escolher\n");
+                                                    scanf(" %c", &op);
+                                                    fflush(stdin);
+                                                    system("cls");
+                                                    if(op ==  'n'){
+                                                        if(w[67]<=975){
+                                                            w[67] = w[67] - 5;
+                                                            w[68] = w[68] - 5;                                                        	
+                                                        }
+                                                    }
+                                                    if(op ==  's'){
+                                                        if(w[68]<1000){
+                                                        w[67] = w[67] + 5;
+                                                        w[68] = w[68] + 5;
+                                                        }          
+                                                    }
+                                                }while(op != 'c');
+                                                printf("Qual Medico deseja desmarcar?");
+                                                scanf("%d",&w[70]);
+                                                fflush(stdin);
+                                                system("cls");
+                                                printf("Trocar medico");
+                                                scanf(" %c",&op);
+                                            }while(op == 's');
+                                            do{
+                                                printf("Qual Mes da agenda gostaria de acessar");
+                                                scanf("%d",&w[73]);
+                                                fflush(stdin);
+                                                if(w[73]<=12 && w[73]>=1){
+                                                    w[74] =1;
+                                                }else{
+                                                    printf("\nMes invalido");
+                                                    }
+                                            }while(w[74] == 0);
+                                            w[74]= 0;
+                                            do{
+                                                printf("Qual Dia da agenda gostaria de acessar");
+                                                scanf("%d",&w[72]);
+                                                fflush(stdin);
+                                                 if(w[72]<=31 && w[72]>=1){
+                                                    w[75] =1;
+                                                }else{
+                                                    printf("\nDia invalido");
+                                                }
+                                            }while(w[75] == 0);
+                                            w[75] == 0;
+                                             for(w[76]=0;w[76]<=20;w[76]++){
+                                                printf("\nHoraio[%d] = %s",w[72],medic[w[70]].agenda.marca.mess[w[73]].diaa[w[72]]);
+                                            }
+
+                                        break;
+                                        
+                                        case 6:
+                                            do{
+                                                printf("Registrar pagamento:\nValor");
+                                                scanf("%f",&financas.entrada[w[41]]);
+                                                fflush(stdin);
+                                                system("cls");
+
+                                                w[41]++;
+                                                printf("\nRegistrar outro pagamento?");
+                                                scanf(" %c",&sair);
+                                                fflush(stdin);
+                                                system("cls"); 
+                                            }while(sair == 's');
+                                        break;
+                                        
+                                        case 7:
+                                            printf("Insira a reclamacao:");
+                                            scanf(" %[^\n]s",&reclamacao[w[46]]);
+                                            fflush(stdin);
+                                            system("cls");
+                                            sair == 's';
+                                            w[46]++;
+                                        break;
+                                        
+                                        case 8:
+                                            logout == 1;
+                                        break;
+                                    }
+                                }while(sair == 'n');
+                                if(sair == 's'){
+                                    strcpy(logini, "0");
+                                    strcpy(senhai, "0");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }while((strcmp(logini,func[w[2]].login) != 0 && strcmp(senhai,func[w[2]].senha) == 0) || (strcmp(logini,func[w[2]].login) == 0 && strcmp(senhai,func[w[2]].senha) != 0) || (strcmp(logini,func[w[2]].login) != 0 && strcmp(senhai,func[w[2]].senha) != 0)); // 
+            break;
+
+            case 2: //Medico
+                do{
+                    printf("LOGIN: ");
+		            scanf(" %[^\n]s",&logini);
+		            fflush(stdin);
+                    for(w[43]=0;w[43]<w[35];w[43]++){
+                        if(strcmp(logini,medic[w[43]].login) == 0){
+                            w[44] = w[43];
+                            printf("SENHA: ");
+                            scanf(" %[^\n]s",&senhai);
+                            fflush(stdin);
+                            system("cls");
+                            if(strcmp(senhai,medic[w[43]].senha) == 0){
+                                printf("Login sucedido!");
+                                sleep(1);
+                                system("cls");
+                                do{
+                                    menume();
+                                    scanf("%d",&menu[13]);
+                                    fflush(stdin);
+                                    switch(menu[3]){
+                                        case 1:
+                                            printf("Entrando na agenda medica");
+                                        break;
+                                    
+                                        case 2:
+
+                                        break;
+                                    }
+                                }while(sair != 'n');
+                                strcpy(logini, "0");
+                                strcpy(senhai, "0");
+                            }else{
+                                printf("Senha incorreta");
+                            }
+                        }
+                    }
+                }while((strcmp(logini,medic[w[44]].login) != 0 && strcmp(senhai,medic[w[44]].senha) == 0) || (strcmp(logini,medic[w[44]].login) == 0 && strcmp(senhai,medic[w[44]].senha) != 0) || (strcmp(logini,medic[w[44]].login) != 0 && strcmp(senhai,medic[w[44]].senha) != 0)); // 
+            break;
+
+            case 3: //Admin
+            	do{
+                    printf("Login:\n"); 
+                    scanf(" %[^\n]s",&logini);
+                    fflush(stdin);
+                    for(w[23]=0;w[23]<w[25];w[23]++){
+                        if(strcmp(logini,admin[w[23]].login) == 0){
+                            w[24] = w[23];
+                            printf("Senha:\n"); 
+                            scanf(" %[^\n]s",&senhai);
+                            fflush(stdin);
+                            system("cls");
+                            if(strcmp(senhai,admin[w[23]].senha) == 0){
+                                printf("Bem Vindo Administrador\n");
+                                system("cls");
+                                do{
+                                    adminmenu01();
+                                    scanf("%d",&menu[4]);
+                                    fflush(stdin);
+                                    system("cls");
+                                    switch(menu[4]){
+                                        case 1:
+                                            do{
+                                                adminmenu02();
+                                                scanf("%d",&menu[5]);
+                                                fflush(stdin);
+                                                system("cls");
+                                                switch(menu[5]){
+                                                    case 1:
+                                                        do{
+                                                            do{
+                                                                printf("lista de funcioraios");
+                                                                for(w[26] = 0; w[26] < w[1]; w[26]++){
+                                                                    printf("\nFuncionario [%d] %s", w[26], func[w[26]].nome);
+                                                                }
+                                                                printf("\nCriar Nova ficha de usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                                sair = op;
+                                                                if(op != 's'){
+                                                                    w[1]++;
+                                                                }
+                                                            }while(sair == 's');
+                                                            printf("\nVer Lista de usuarios novamente?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair == 's');
+                                                    break;
+
+                                                    case 2:
+                                                        do{
+                                                            do{
+                                                                printf("lista de Medico");
+                                                                for(w[27] = 0; w[27] < w[28]; w[27]++){
+                                                                    printf("\nMedico [%d] %s", w[27], medic[w[27]].nome);
+                                                                }
+                                                                printf("\nCriar Nova ficha de usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(sair == 's');
+                                                            w[28]++;
+                                                            printf("\nVer Lista de usuarios novamente?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair == 's');
+                                                    break;
+
+                                                    case 3:
+                                                        do{
+                                                            do{
+                                                                printf("lista de Administradores");
+                                                                for(w[29] = 0; w[29] < w[25]; w[29]++){
+                                                                    printf("\nAdministrador [%d] %s", w[29], admin[w[29]].nome);
+                                                                }
+                                                                printf("\nCriar Nova ficha de usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(sair == 's');
+                                                            w[25]++;
+                                                            printf("\nVer Lista de usuarios novamente?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair == 's');
+                                                    break;
+
+                                                    case 4:
+                                                        sair == 's';
+                                                    break;
+                                                }
+                                            }while(sair == 'n');
+                                        break;
+                                        
+                                        case 2:
+                                            do{
+                                                adminmenu02();
+                                                scanf("%d",&menu[6]);
+                                                fflush(stdin);
+                                                system("cls");
+                                                switch (menu[6]){
+                                                    case 1:
+                                                        printf("Registrar funcionario....");
+                                                        printf("\nNome:");
+                                                        scanf(" %[^\n]s",&func[w[30]].nome);
+                                                        printf("\nCpf:");
+                                                        scanf(" %[^\n]s",&func[w[30]].cpf);
+                                                        printf("\nIdade:");
+                                                        scanf("%d",&func[w[30]].idade);
+                                                        printf("\nSalario:");
+                                                        scanf("%d",&func[w[30]].benef.salario);
+                                                        printf("\nVale alimentacao:");
+                                                        scanf(" %[^\n]s",&func[w[30]].benef.alimentacao);
+                                                        printf("\nVale Trasporte:");
+                                                        scanf(" %[^\n]s",&func[w[30]].benef.trasporte);
+                                                        printf("\nLogin:");
+                                                        scanf(" %[^\n]s",&func[w[30]].login);
+                                                        printf("\nsenha:");
+                                                        scanf(" %[^\n]s",&func[w[30]].senha);
+
+                                                        //confimação
+                                                        printf("\nfuncionario registrado:\n nome: %s\n cpf: %s\n idade: %d\nlogin: %s \n senha %s ",func[w[30]].nome, func[w[30]].cpf,func[w[30]].idade,func[w[30]].login,func[w[30]].senha);
+                                                        printf("\nDeseja registrar novo funcionario?");
+                                                        scanf(" %c", &sair);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(sair == 's'){
+                                                        w[31]++;
+                                                        }
+                                                    break;
+
+                                                    case 2:
+                                                        printf("Registrar funcionario(acesso medico)....");
+                                                        printf("\nNome:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].nome);
+                                                        printf("\nCpf:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].cpf);
+                                                        printf("\nIdade:");
+                                                        scanf("%d",&medic[w[31]].idade);
+                                                        printf("\nSalario:");
+                                                        scanf("%d",&medic[w[31]].benef.salario);
+                                                        printf("\nVale alimentacao:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].benef.alimentacao);
+                                                        printf("\nVale Trasporte:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].benef.trasporte);
+                                                        printf("\nLogin:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].login);
+                                                        printf("\nsenha:");
+                                                        scanf(" %[^\n]s",&medic[w[31]].senha);
+                                                        //confimação
+                                                        printf("\nfuncionario registrado:\n nome: %s\n cpf: %s\n idade: %d\nlogin: %s \n senha %s ",medic[w[31]].nome, medic[w[31]].cpf,medic[w[31]].idade,medic[w[31]].login,medic[w[31]].senha);
+                                                        printf("\nDeseja registrar novo funcionario?");
+                                                        scanf(" %c", &sair);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(sair == 's'){
+                                                            w[31]++;
+                                                        }
+                                                    break;
+
+                                                    case 3:
+                                                        printf("Registrar funcionario(acesso administrador)....");
+                                                        printf("\nNome:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].nome);
+                                                        fflush(stdin);
+                                                        printf("\nCpf:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].cpf);
+                                                        fflush(stdin);
+                                                        printf("\nIdade:");
+                                                        scanf("%d",&admin[w[32]].idade);
+                                                        fflush(stdin);
+                                                        printf("\nSalario:");
+                                                        scanf("%d",&admin[w[32]].benef.salario);
+                                                        fflush(stdin);
+                                                        printf("\nVale alimentacao:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].benef.alimentacao);
+                                                        fflush(stdin);
+                                                        printf("\nVale Trasporte:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].benef.trasporte);
+                                                        fflush(stdin);
+                                                        printf("\nLogin:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].login);
+                                                        fflush(stdin);
+                                                        printf("\nsenha:");
+                                                        scanf(" %[^\n]s",&admin[w[32]].senha);
+                                                        fflush(stdin);
+                                                        //confimação
+                                                        printf("\nfuncionario registrado:\nnome: %s\ncpf: %s\nidade: %d\nlogin: %s \nsenha %s ",admin[w[32]].nome, admin[w[32]].cpf,admin[w[32]].idade,admin[w[32]].login,admin[w[32]].senha);
+                                                        printf("\nDeseja registrar novo funcionario?");
+                                                        scanf(" %c", &sair);
+                                                        fflush(stdin);
+                                                        system("cls");
+                                                        if(sair == 's'){
+                                                            w[32]++;
+                                                        }
+                                                    break;
+                                                    case 4:
+                                                        sair == 'n';
+                                                    break;
+                                                }
+                                            }while(sair == 'n');
+                                            system("cls");
+                                        break;
+                                        
+                                        case 3:
+                                            do{
+                                                adminmenu02();
+                                                scanf(" %d",&menu[7]);
+                                                fflush(stdin);
+                                                system("cls");
+                                                switch (menu[7]){
+                                                    case 1:
+                                                        do{
+                                                            for(w[0] = 0; w[0] <w[1]; w[0]++){
+                                                                printf("\n[%d] %s", w[0], func[w[0]].nome);
+                                                            }
+                                                            printf("\nQual usuario gostaria de opar ?");
+                                                            scanf("%d",&w[33]);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                            do{
+                                                                adminmenu03();
+                                                                scanf("%d",&menu[4]);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                                switch(menu[4]){
+                                                                    case 1:
+                                                                        do{
+                                                                            printf("\nNome registrado: %s",func[w[33]].nome);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nNome:");
+                                                                        scanf(" %[^\n]s",&func[w[33]].nome);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 2:
+                                                                        do{
+                                                                            printf("\nCpf registrado: %s",func[w[33]].cpf);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nCpf:");
+                                                                        scanf(" %[^\n]s",&func[w[33]].cpf);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 3:
+                                                                        do{
+                                                                            printf("\nIdade registrado: %d",func[w[33]].idade);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nIdade:");
+                                                                        scanf(" %d",&func[w[33]].idade);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 4:
+                                                                        do{
+                                                                            printf("\nSalario registrado: %d",func[w[33]].benef.salario);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSalario:");
+                                                                        scanf("%d",&func[w[33]].benef.salario);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 5:
+                                                                        do{
+                                                                            printf("\nAlimentacao registrado: %d",func[w[33]].benef.alimentacao);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nAlimentacao:");
+                                                                        scanf(" %d",&func[w[33]].benef.alimentacao);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 6:
+                                                                        do{
+                                                                            printf("\nValor do Vale traporte registrado: %d",func[w[33]].benef.trasporte);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nTrasporte:");
+                                                                        scanf("%d",&func[w[33]].benef.trasporte);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 7:
+                                                                        do{
+                                                                            printf("\nLogin registrado: %s",func[w[33]].login);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nLogin:");
+                                                                        scanf(" %[^\n]s",&func[w[33]].login);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 8:
+                                                                        do{
+                                                                            printf("\nSenha registrado: %s",func[w[33]].senha);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSenha:");
+                                                                        scanf(" %[^\n]s",func[w[33]].senha);
+                                                                        system("cls");
+                                                                    break;
+                                                                }
+                                                                printf("deseja ver a ficha complete?");
+                                                                scanf(" %d",&menu[8]);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                                if(menu[8] == 's'){
+                                                                    printf("\nNome: %s", func[w[33]].nome);
+                                                                    printf("\nCpf: %s", func[w[33]].cpf);
+                                                                    printf("\nIdade: %d",func[w[33]].idade);
+                                                                    printf("\nSalario: %d",func[w[33]].benef.salario);
+                                                                    printf("\nVale alimentacao: %d",func[w[33]].benef.alimentacao);
+                                                                    printf("\nVale Trasporte: %d",func[w[33]].benef.trasporte);
+                                                                    printf("\nLogin: %s",func[w[33]].login);
+                                                                    printf("\nsenha: %s",func[w[33]].senha);
+                                                                }
+                                                                printf("\nModificar mais algo neste usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(sair == 's');
+                                                            printf("\nModificar outro usuario?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair != 's');
+                                                    break; 
+
+                                                    case 2: 
+                                                        do{
+                                                            for(w[34] = 0; w[34] < w[35]; w[34]++){
+                                                                printf("\n[%d] %s", w[34], medic[w[34]].nome);
+                                                            }
+
+                                                            printf("\nQual usuario gostaria de opar ?");
+                                                            scanf("%d",&w[36]);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        
+                                                            do{
+                                                                adminmenu03();
+                                                                scanf("%d",&menu[9]);
+                                                                fflush(stdin);
+                                                                system("cls");
+
+                                                                switch(menu[9]){
+                                                                    case 1:
+                                                                        do{
+                                                                            printf("\nNome registrado: %s",medic[w[36]].nome);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nNome:");
+                                                                        scanf(" %[^\n]s",&medic[w[36]].nome);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 2:
+                                                                        do{
+                                                                            printf("\nCpf registrado: %s",medic[w[36]].cpf);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nCpf:");
+                                                                        scanf(" %[^\n]s",&medic[w[36]].cpf);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 3:
+                                                                        do{
+                                                                            printf("\nIdade registrado: %d",medic[w[36]].idade);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nIdade:");
+                                                                        scanf(" %d",&medic[w[36]].idade);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 4:
+                                                                        do{
+                                                                            printf("\nSalario registrado: %d",medic[w[36]].benef.salario);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSalario:");
+                                                                        scanf("%d",&medic[w[36]].benef.salario);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 5:
+                                                                        do{
+                                                                            printf("\nAlimentacao registrado: %d",medic[w[36]].benef.alimentacao);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nAlimentacao:");
+                                                                        scanf(" %d",&medic[w[36]].benef.alimentacao);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 6:
+                                                                        do{
+                                                                            printf("\nValor do Vale traporte registrado: %d",medic[w[36]].benef.trasporte);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nTrasporte:");
+                                                                        scanf("%d",&medic[w[36]].benef.trasporte);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 7:
+                                                                        do{
+                                                                            printf("\nLogin registrado: %s",medic[w[36]].login);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nLogin:");
+                                                                        scanf(" %[^\n]s",&medic[w[36]].login);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 8:
+                                                                        do{
+                                                                            printf("\nSenha registrado: %s",medic[w[36]].senha);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %[^\n]s",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSenha:");
+                                                                        scanf(" %[^\n]s",medic[w[36]].senha);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                }
+
+                                                                printf("deseja ver a ficha complete?");
+                                                                scanf(" %c",&menu[10]);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                                if(menu[10] != 's'){
+                                                                    printf("\nNome: %s", medic[w[36]].nome);
+                                                                    printf("\nCpf: %s", medic[w[36]].cpf);
+                                                                    printf("\nIdade: %d",medic[w[36]].idade);
+                                                                    printf("\nSalario: %d",medic[w[36]].benef.salario);
+                                                                    printf("\nVale alimentacao: %d",medic[w[36]].benef.alimentacao);
+                                                                    printf("\nVale Trasporte: %d",medic[w[36]].benef.trasporte);
+                                                                    printf("\nLogin: %s",medic[w[36]].login);
+                                                                    printf("\nsenha: %s",medic[w[36]].senha);
+                                                                }
+                                                                printf("\nModificar mais algo neste usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(sair == 's');
+                                                            printf("\nModificar outro usuario(adiministrador)?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair != 's');
+                                                    break;
+
+                                                    case 3: //em obras
+                                                        do{
+                                                            for(w[37] = 0; w[37] < w[25]; w[37]++){
+                                                                printf("\n[%d] %s", w[37], admin[w[37]].nome);
+                                                            }
+                                                            printf("\nQual usuario gostaria de alterar ?");
+                                                            scanf("%d",&w[38]);
+                                                            fflush(stdin);
+                                                            system("cls");
+
+                                                            do{
+                                                                adminmenu03();
+                                                                scanf(" %d",&menu[11]);
+                                                                fflush(stdin);
+                                                                system("cls");
+
+                                                                switch(menu[11]){
+                                                                    case 1:
+                                                                        do{
+                                                                            printf("\nNome registrado: %s",admin[w[38]].nome);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op == 'n');
+                                                                        printf("\nNome:");
+                                                                        scanf(" %[^\n]s",&admin[w[38]].nome);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 2:
+                                                                        do{
+                                                                            printf("\nCpf registrado: %s",admin[w[38]].cpf);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            system("cls");
+                                                                        }while(op != 's');                                                
+                                                                        printf("\nCpf:");
+                                                                        scanf(" %[^\n]s",&admin[w[38]].cpf);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 3:
+                                                                        do{
+                                                                            printf("\nIdade registrado: %d",admin[w[38]].idade);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nIdade:");
+                                                                        scanf(" %d",&admin[w[38]].idade);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 4:
+                                                                        do{
+                                                                            printf("\nSalario registrado: %d",admin[w[38]].benef.salario);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSalario:");
+                                                                        scanf("%d",&admin[w[38]].benef.salario);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 5:
+                                                                        do{
+                                                                            printf("\nAlimentacao registrado: %d",admin[w[38]].benef.alimentacao);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nAlimentacao:");
+                                                                        scanf(" %d",&admin[w[38]].benef.alimentacao);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 6:
+                                                                        do{
+                                                                            printf("\nValor do Vale traporte registrado: %d",admin[w[38]].benef.trasporte);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nTrasporte:");
+                                                                        scanf("%d",&admin[w[38]].benef.trasporte);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 7:
+                                                                        do{
+                                                                            printf("\nLogin registrado: %s",admin[w[38]].login);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nLogin:");
+                                                                        scanf(" %[^\n]s",&admin[w[38]].login);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                    case 8:
+                                                                        do{
+                                                                            printf("\nSenha registrado: %s",admin[w[38]].senha);
+                                                                            printf("\nDeseja alterar?");
+                                                                            scanf(" %c",&op);
+                                                                            fflush(stdin);
+                                                                            system("cls");
+                                                                        }while(op != 's');
+                                                                        printf("\nSenha:");
+                                                                        scanf(" %[^\n]s",admin[w[38]].senha);
+                                                                        fflush(stdin);
+                                                                        system("cls");
+                                                                    break;
+
+                                                                }
+
+                                                                printf("deseja ver a ficha complete?");
+                                                                scanf(" %d",&menu[12]);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                                if(menu[12] != 's'){
+                                                                    printf("\nNome: %s", admin[w[38]].nome);
+                                                                    printf("\nCpf: %s", admin[w[38]].cpf);
+                                                                    printf("\nIdade: %d",admin[w[38]].idade);
+                                                                    printf("\nSalario: %d",admin[w[38]].benef.salario);
+                                                                    printf("\nVale alimentacao: %d",admin[w[38]].benef.alimentacao);
+                                                                    printf("\nVale Trasporte: %d",admin[w[38]].benef.trasporte);
+                                                                    printf("\nLogin: %s",admin[w[38]].login);
+                                                                    printf("\nsenha: %s",admin[w[38]].senha);
+                                                                }
+                                                                printf("\nModificar mais algo neste usuario?");
+                                                                scanf(" %c",&sair);
+                                                                fflush(stdin);
+                                                                system("cls");
+                                                            }while(sair == 's');
+                                                            printf("\nModificar outro usuario(adiministrador)?");
+                                                            scanf(" %c",&sair);
+                                                            fflush(stdin);
+                                                            system("cls");
+                                                        }while(sair != 's');
+                                                    break;
+                                                }
+                                                printf("\nDeseja registrar novo funcionario?");
+                                                scanf(" %c", &sair);
+                                                fflush(stdin);
+                                                system("cls");
+                                            }while(sair == 's');
+                                        break;
+                                        
+                                        case 4:
+                                            do{
+                                                printf("Registrar Gasto:");
+                                                scanf("%f",&financas.saida[w[42]]);
+                                                fflush(stdin);
+                                                system("cls");
+
+                                                w[42]++;
+                                                printf("\nRegistrar outro gasto?"); 
+                                                scanf(" %c",&sair);
+                                                fflush(stdin);
+                                                system("cls"); 
+                                            }while(sair == 's');
+                                        break;
+                                        
+                                        case 5:
+                                            //medico
+                                            y[7] = y[1]/100*y[3];
+                                            y[8] = y[1]/100*y[5];
+                                            y[9] = y[1]/100*y[6];
+                                            y[10]= y[7]+y[8]+y[9];//total
+                                            //administrador
+                                            y[11] = y[2]/100*y[3];
+                                            y[12] = y[2]/100*y[5];
+                                            y[13] = y[2]/100*y[6];
+                                            y[14] = y[11]+y[12]+y[13];//total
+                                            //funcionario
+                                            y[15] = y[0]/100*y[3];
+                                            y[16] = y[0]/100*y[5];
+                                            y[17] = y[0]/100*y[6];
+                                            y[18]= y[16]+y[17]+y[15];
+
+                                            printf("\n--------------------------------------------");
+                                            printf("\nExibindo Relatorio ate o momento das finaças");
+                                            printf("\nMedico  %.2f                                ",y[1]);
+                                            printf("\n%.2f / %.1f%   = %.2f R$                    ",y[1],y[3],y[7]);
+                                            printf("\n%.2f / %.1f%   = %.2f R$                    ",y[1],y[5],y[8]);
+                                            printf("\n%.2f / %.1f%   = %.2f R$                    ",y[1],y[5],y[9]);
+                                            printf("\n--------------------------------------------");
+                                            printf("\ntotal Desconto = %.2f                       ",y[10]);
+                                            printf("\n                                            ");
+                                            printf("\nbonificação de 5 por dia = 155              ");
+                                            printf("\n                                            ");
+                                            printf("\ntotal salaraio = 6759.00                    ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\nvalor do vale alimentacao: 43.60 p/ dia     ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\nvalor do vale Trasporte: 05.50 p/ dia       ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\n                                            ");
+                                            printf("\nAdministrador %.2f                          ",y[2]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[2],y[3],y[11]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[2],y[5],y[12]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[2],y[5],y[13]);
+                                            printf("\n--------------------------------------------");
+                                            printf("\ntotal Desconto = %.2f                       ",y[14]);
+                                            printf("\n                                            ");
+                                            printf("\nbonificação de 6.75 por dia = 309.25        ");
+                                            printf("\n                                            ");
+                                            printf("\ntotal salaraio = 3612.00                    ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\nvalor do vale alimentacao: 26.95 p/ dia     ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\nvalor do vale Trasporte: 05.50 p/ dia       ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\n                                            ");
+                                            printf("\nFuncionario %.2f                            ",y[0]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[0],y[3],y[15]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[0],y[5],y[16]);
+                                            printf("\n%.2f / %.2f  = %.2f R$                      ",y[0],y[6],y[17]);
+                                            printf("\n--------------------------------------------");
+                                            printf("\ntotal Desconto = %.2f                       ",y[18]);
+                                            printf("\n                                            ");
+                                            printf("\nbonificacaoo de 7.75 por dia = 240.25        ");
+                                            printf("\n                                            ");
+                                            printf("\ntotal salaraio = 1123.00                    ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\nvalor do vale alimentação: 21.00 p/ dia     ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\nvalor do vale Trasporte: 05.50 p/ dia       ");
+                                            printf("\n31 dias trabalhados                         ");
+                                            printf("\n--------------------------------------------");
+                                            printf("\n--------------------------------------------");
+                                            printf("\nseguir?");
+                                            scanf(" %c",&sair);
+                                            fflush(stdin);
+                                            system("cls");
+
+                                            printf("\nQuantas consultas tivemos ate agora?");
+                                            scanf("%d",&w[61]);
+                                            fflush(stdin);
+                                            if(sair == 's'){
+                                                printf("\nVizualisar Funcionarios?");
+                                                scanf(" %c",&sair);
+                                                fflush(stdin);        
+                                                if(sair == 's'){
+                                                    printf("\nFuncionarios..");
+                                                    for(w[45]=0;w[45]<w[1];w[45]++){
+                                                        printf("\n[%d] %s \nGasto: 1946.00 R$",w[45],func[w[45]].nome);
+                                                    }
+                                                    printf("\n\n\n\nAdminins..");
+                                                    for(w[55]=0;w[55]<w[25];w[55]++){
+                                                        printf("\n[%d] %s\nGasto: 5666,70 R$",w[55],admin[w[55]].nome);
+                                                    }
+                                                    printf("\n\n\n\nMedicos...");
+                                                    for(w[54]=0;w[54]<w[35];w[54]++){
+                                                        printf("\n[%d] %s\nGasto: 8856.00 R$",w[54],medic[w[54]].nome);
+                                                    }
+                                                }
+                                            }
+                                            printf("\nVolta ao menu?");
+                                            scanf(" %c",&sair);
+                                            fflush(stdin);
+                                            system("cls");
+                                        break;
+
+                                        case 6:
+                                            do{
+                                                system("cls");
+                                                printf("Leitura da reclamação");
+                                                for(w[47]=w[49];w[47]<w[48];w[47]++){
+                                                    scanf(" %[^\n]s",&reclamacao[w[47]]);
+                                                    fflush(stdin); 
+                                                    system("cls");    
+                                                }
+
+                                                printf("\n<(n)--Navegue nas listas --(s)>\t\t Aperte c para sair\n");
+                                                scanf(" %c", &op);
+                                                fflush(stdin);
+                                                system("cls");
+                                                if(op ==  'n'){
+                                                    if(w[49]<=10000){
+                                                        w[49] = w[49] - 5;
+                                                        w[48] = w[48] - 5;                                                        	
+                                                    }
+                                                }
+                                                if(op ==  's'){
+                                                    if(w[48]<10000){
+                                                        w[49] = w[49] + 5;
+                                                        w[48] = w[48] + 5;
+                                                    }          
+                                                }
+                                                
+                                            }while(op != 'c');
+                                            printf("Volta ao menu?");
+                                            scanf(" %c",&sair);
+                                            fflush(stdin);
+                                            system("cls");
+                                        break;
+
+                                        case 7:
+                                            logout == 1;
+                                        break;
+                                    }
+                                }while(sair != 'n');
+                                strcpy(logini, "0");
+                                strcpy(senhai, "0");
+                            }else{
+                                printf("Senha incorreta");
+                            }
+                        }
+                    }
+			    }while((strcmp(logini,admin[w[24]].login) != 0 && strcmp(senhai,admin[w[24]].senha) == 0) || (strcmp(logini,admin[w[24]].login) == 0 && strcmp(senhai,admin[w[24]].senha) != 0) || (strcmp(logini,admin[w[24]].login) != 0 && strcmp(senhai,admin[w[24]].senha) != 0));
+            break;
+        } 
+    }while(logout != 1);
+
+    return 0;
+}
+
+void menu01(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|                     BEM VINDO AO SISTEMA                   |\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|                             DO                             |\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|                        FISIO-STATION                       |\n");
+    printf("|------------------------------------------------------------|\n");
+}
+void menu02(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|-----------------------1 FUNCIONARIO------------------------|\n");
+    printf("|-------------------------2 MEDICO---------------------------|\n");
+    printf("|---------------------3 ADIMINISTRADOR-----------------------|\n");
+    printf("|--------------------------4 SAIR----------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+
+//funçoes menus comuns fim
+
+//funçoes funcionario
+void funcmenu01(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|----------------------1 INFORMACOES-------------------------|\n");
+    printf("|-------------------2 REGISTRAR PACIENTE---------------------|\n");
+    printf("|--------------------3 ALTERAR PACIENTE----------------------|\n");
+    printf("|--------------------4 AGENDAR CONSULTA----------------------|\n");
+    printf("|-------------------5 DESMARCAR CONSULTA---------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|-------------ESCOLHA UMA OPCAO OPERADOR DE CAIXA------------|\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|--------------------6 REGISTRAR PAGAMENTO-------------------|\n");
+    printf("|-----------------------7 RECLAMACOES------------------------|\n");
+    printf("|---------------------------8 SAIR---------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+void funcmenu02(){
+    printf("\n|------------------------------------------------------------|");
+    printf("\n|----------Localizacao Unidades / Telefone / E-mail----------|");
+    printf("\n|------------------------------------------------------------|\n\n");
+        
+    printf("| Clinica FISIO STATION 504 Sul - Asa Sul (DF)               |\n");
+    printf("| Telefone para informacoes: (61) 3889-7000                  |\n");
+    printf("| E-mail: fisiostation504@hotmail.com                        |\n\n");
+    
+    printf("| Clinica FISIO STATION SQN 305 - Asa Norte (DF)             |\n");
+    printf("| Telefone para informacoes: (61) 3890-7000                  |\n");
+    printf("| E-mail: fisiostation305@hotmail.com                        |\n\n");
+    
+    printf("| Clinica FISIO STATION SHS (sede) - Eixo monumental (DF)    |\n");
+    printf("| Telefone para informacoes: (61) 3891-7000                  |\n");
+    printf("| E-mail: fisiostationSHS@hotmail.com                        |\n\n");
+}
+void funcmenu03(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|-------------------------1 NOME-----------------------------|\n");
+    printf("|--------------------------2 CPF-----------------------------|\n");
+    printf("|--------------------------3 RG------------------------------|\n");
+    printf("|-------------------------4 IDADE----------------------------|\n");
+    printf("|-------------------------5 PLANO----------------------------|\n");
+    printf("|-----------------------6 ENDERECO---------------------------|\n");
+    printf("|-----------------------7 TELEFONE---------------------------|\n");
+    printf("|-------------------------8 SAIR-----------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+//funçoes funcionario fim
+
+// funçoes adim
+void adminmenu01(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|-----------------1 LISTA DE FUNCIONARIOS--------------------|\n");
+    printf("|------------------2 REGISTRAR FUNCIONARIO-------------------|\n");
+    printf("|-------------------3 ALTERAR FUNCIONARIO--------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------FLUXO DE CAIXA-------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+    printf("|--------------------4 REGISTRAR GASTOS----------------------|\n");
+    printf("|-----------------5 VISAO GERAL (FINANCAS)-------------------|\n");
+    printf("|----------------------6 RECLAMACOES-------------------------|\n");
+    printf("|-------------------------7 SAIR-----------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+void adminmenu02(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|----------------1 FUNCIONARIO(ACESSO COMUN)-----------------|\n");
+    printf("|----------------2 FUNCIONARIO(ACESSO MEDICO)----------------|\n");
+    printf("|------------3 FUNCIONARIO(ACESSO ADIMINISTRADOR)------------|\n");
+    printf("|--------------------------4 SAIR----------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+void adminmenu03(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|-------------------------1 NOME-----------------------------|\n");
+    printf("|--------------------------2 CPF-----------------------------|\n");
+    printf("|-------------------------3 IDADE----------------------------|\n");
+    printf("|------------------------4 SALARIO---------------------------|\n");
+    printf("|-----------------------5 ALIMENTCAO-------------------------|\n");
+    printf("|-----------------------6 TRASPORTE--------------------------|\n");
+    printf("|---------------------7 LOGIN SISTEMA------------------------|\n");
+    printf("|---------------------8 SENHA SISTEMA------------------------|\n");
+    printf("|--------------------------9 SAIR----------------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
+void menume(){
+    printf("|------------------------------------------------------------|\n");
+    printf("|---------------------ESCOLHA UMA OPCAO----------------------|\n");
+    printf("|------------------------1 AGENDA----------------------------|\n");
+    printf("|-------------------2 LISTA DE PACIENTES---------------------|\n");
+    printf("|------------------------------------------------------------|\n");
+}
